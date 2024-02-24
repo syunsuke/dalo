@@ -11,7 +11,7 @@ dalo_download_by_urls(urls, dest_dir = "./", check = TRUE, make_dir = FALSE)
 
 \item{dest_dir}{directory which files get into}
 
-\item{check}{if TRUE, check downloaded files}
+\item{check}{if TRUE, don't download exist files}
 
 \item{make_dir}{if TRUE, make a directory}
 }

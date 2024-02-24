@@ -22,22 +22,28 @@ The goal of dalo is to download data easily from website.
 
 dalo is **DA**ta down**LO**ad helper tool.
 
+daloは、Webサイトからデータファイル等を簡単にダウンロードするのをサポートするツールです。
+
+
 ## Installation
 
 You can install the development version of dalo from [GitHub](https://github.com/) with:
+
+daloは、以下のコマンドでインストールできます。
 
 ``` r
 # install.packages("devtools")
 devtools::install_github("syunsuke/dalo")
 ```
 
-## Example
+## Example of dalo_download_by_urls()
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows you how to use dalo_download_by_urls():
+
+dalo_download_by_urls()の基本的な使い方は次の通り
 
 ```{r example, eval=FALSE}
 library(dalo)
-## basic example code
 
 target <- c("https://syunsuke.github.io/assets/images/001.jpg",
             "https://syunsuke.github.io/assets/images/002.jpg")
@@ -45,4 +51,46 @@ target <- c("https://syunsuke.github.io/assets/images/001.jpg",
 dalo_download_by_urls(target, "dl_image/", make_dir = TRUE, check = FALSE)
 
 ```
+
+
+| 引数名  | 内容 |
+| ------------- | ------------- |
+| urls  | ダウンロード対象のURLのリスト  |
+| dest_dir  | ダウンロードしたファイルを保存するローカルのディレクトリパス  |
+| check | 重複ダウンロードをするかどうかをTRUE or FALSEで指定 |
+| make_dir | dest_dirが存在しない場合にディレクトリを作成するかをTRUE or FALSEで指定|
+
+### 引数 check
+
+デフォルトはTURE。
+
+この引数がTRUEの場合、dest_dirにあるファイル名と同名のurlsのベース名をもつファイルをダウンロードしないようにします。逆にFALSEの場合、dest_dirの内容を調べずにダウンロードし、重複している場合は単純に上書きします。
+
+### 引数 make_dir
+
+dest_dirは、デフォルトでカレントディレクトリですが、これを指定した場合に、その指定したディレクトリがない場合の挙動を制御します。デフォルトはFALSEになっていて、指定したディレクトリがない場合、エラーを出して終了します。これをTRUEにすることで、強制的にディレクトリを作成するようになります。
+
+
+
+## Example of dalo_download_by_urls()
+
+This is a basic example which shows you how to use dalo_pickup_from_zipfile():
+
+dalo_pickup_from_zipfile()の基本的な使い方は次の通り
+
+```{r example2, eval=FALSE}
+library(dalo)
+
+target <- c("data001.zip","data002.zip")
+
+dalo_pickup_from_zipfile(target, "data/", pattern = "\\.xlxs$")
+
+```
+
+
+| 引数名  | 内容 |
+| ------------- | ------------- |
+| zipfiles  | zipファイルのパスのベクトル  |
+| dest_dir  | 抜き出したファイルを保存するローカルのディレクトリパス  |
+| pattern | 抜き出したいファイルを正規表現で指定 |
 
