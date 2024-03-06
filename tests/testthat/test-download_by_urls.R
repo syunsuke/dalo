@@ -41,14 +41,24 @@ test_that("ダウンロード関数が正しく動作すること", {
       # ダウンロードが成功したかどうかを確認
       expect_true(all(file.exists(paste0("dldata2/",basename(target)))))
 
-    # 後処理
-    unlink("dldata2/", recursive = TRUE)
+      # 後処理
+      unlink("dldata2/", recursive = TRUE)
 
       #####################################################
       # ディレクトリがない場合にエラーになる
       # デフォルトでディレクトリを作らない
       #####################################################
       expect_error(dalo_download_by_urls(target, "dldata2"))
+
+      #####################################################
+      # 名前を付けて保存する
+      #####################################################
+      myfilename <- "mytestfile.xls"
+      dalo_dl_by_url_with_name(target[1], dest_dir = "dldata3/", myfilename, make_dir = TRUE)
+      expect_true(all(file.exists(paste0("dldata3/",myfilename))))
+
+      # 後処理
+      unlink("dldata3/", recursive = TRUE)
 
     },
     download.file = mock_download.file

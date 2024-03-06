@@ -52,6 +52,50 @@ dalo_download_by_urls <-
   }
 }
 
+#' Download A file with a favorit name
+#'
+#' @param url single url string
+#' @param dest_dir directory which files get into
+#' @param filename which you'd like to name
+#' @param check if TRUE, don't download exist files
+#' @param make_dir if TRUE, make a directory
+#' @export
+dalo_dl_by_url_with_name <- function(url,
+                                     dest_dir = "./",
+                                     filename,
+                                     check = TRUE,
+                                     make_dir = FALSE){
+
+  # dest_dirが存在しない場合エラーで終了
+  if(!dir.exists(paths = dest_dir)){
+    if(make_dir){
+      dir.create(dest_dir, recursive = TRUE)
+      #message((sprintf("%s has been created.", dest_dir)))
+    }else{
+      stop("dest_dir does not exist.")
+    }
+  }
+
+  # 既に存在するファイルをダウンロードしない場合
+  if (check){
+    if(filename %in% dir(dest_dir)){
+      return()
+    }
+  }
+
+  dest_path <- paste0(dest_dir, "/", filename)
+
+  tryCatch({
+    download.file(url = url, mode = "wb", destfile = dest_path)
+  },
+  error = function(e){
+    message("Error!!")
+    message(e)
+  }
+  )
+}
+
+
 # subfunction
 # 任意のディレクトリにあるファイル名と一致する
 # basenameをもつURLをベクトルから外す
